@@ -22,8 +22,8 @@ public class ScheduleService {
     }
 
     public ResponseData<ResponseScheduleCinema> getScheduleCinema(Integer schedule_id, String schedule_date){
-        if(scheduleRepository.getScheduleCinema(schedule_id, schedule_date) == null){
-            return new ResponseData(HttpStatus.NOT_FOUND, "failed", null);
+        if(scheduleRepository.getScheduleCinema(schedule_id, schedule_date).size() == 0){
+            return new ResponseData(HttpStatus.NOT_FOUND, "failed", scheduleRepository.getScheduleCinema(schedule_id, schedule_date));
         }else{
             List<ResponseScheduleCinema> data = new ArrayList<>();
             for(int i=0; i< scheduleRepository.getScheduleCinema(schedule_id, schedule_date).size(); i++){

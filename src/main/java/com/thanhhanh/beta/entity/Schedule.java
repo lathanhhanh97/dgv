@@ -1,5 +1,6 @@
 package com.thanhhanh.beta.entity;
 
+import com.thanhhanh.beta.model.ResponseCinema;
 import com.thanhhanh.beta.model.ResponseFormat;
 import com.thanhhanh.beta.model.ResponseScheduleTime;
 
@@ -23,13 +24,25 @@ import javax.persistence.*;
                                 @ColumnResult(name = "movie_format")
                         }
                 )
+        ),
+        @SqlResultSetMapping(
+                name = "ResponseCinema",
+                classes = @ConstructorResult(
+                        targetClass = ResponseCinema.class,
+                        columns = {
+                                @ColumnResult(name = "cinema_id"),
+                                @ColumnResult(name = "cinema_name"),
+                                @ColumnResult(name = "cinema_address")
+                        }
+                )
         )
 })
 @NamedNativeQuery(name = "getScheduleTimeByFilm", resultSetMapping = "ResponseScheduleTime",
 query = "SELECT `schedule`.`schedule_id`, `schedule`.`schedule_start` FROM `movies`,`schedule`,`room`,`cinemas` WHERE `movies`.`movie_id` = `schedule`.`movie_id` AND `schedule`.`room_id` = `room`.`room_id`AND `room`.`cinema_id` = `cinemas`.`cinema_id` AND `movies`.`movie_id` = ?1 AND `schedule`.`schedule_date` = ?2 AND `cinemas`.`cinema_id` = ?3")
 @NamedNativeQuery(name = "getScheduleFormat", resultSetMapping = "ResponseFormat",
 query = "SELECT `movies`.`movie_format` FROM `movies`,`schedule`,`room`,`cinemas` WHERE `movies`.`movie_id` = `schedule`.`movie_id` AND `schedule`.`room_id` = `room`.`room_id`AND `room`.`cinema_id` = `cinemas`.`cinema_id` AND `movies`.`movie_id` = ?1 AND `schedule`.`schedule_date` = ?2 AND `cinemas`.`cinema_id` = ?3 GROUP BY `movies`.`movie_format`")
-
+@NamedNativeQuery(name = "ResponseCinema", resultSetMapping = "ResponseCinema",
+query = "SELECT `cinemas`.* FROM `cinemas`, `schedule`, `room` WHERE `schedule`.`room_id` = `room`.`room_id` AND `room`.`cinema_id` = `cinemas`.`cinema_id` AND `schedule`.`movie_id` = ?1 AND `schedule`.`schedule_date` = ?2")
 @Entity
 @Table(name = "schedule")
 public class Schedule {

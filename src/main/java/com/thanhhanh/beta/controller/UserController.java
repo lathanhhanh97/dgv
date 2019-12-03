@@ -1,15 +1,16 @@
 package com.thanhhanh.beta.controller;
 
 import com.thanhhanh.beta.entity.User;
+import com.thanhhanh.beta.model.UserNameProfile;
 import com.thanhhanh.beta.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.text.ParseException;
 
 @RestController
 @Api(value = "Api user")
@@ -28,5 +29,11 @@ public class UserController {
     @GetMapping("/register")
     public ResponseEntity<?> registerUser(){
         return null;
+    }
+
+    @ApiOperation(value = "Cập nhật user")
+    @PutMapping("/{id}/update")
+    public ResponseEntity<?> updateUser(@PathVariable Integer id, @Valid @RequestBody UserNameProfile user) throws ParseException {
+        return ResponseEntity.ok(userService.updateUser(id, user));
     }
 }

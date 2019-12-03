@@ -27,8 +27,8 @@ public class ScheduleController {
     }
 
     @ApiOperation(value = "Get suất chiếu")
-    @GetMapping("/film/{movie_id}/{date}")
-    public ResponseEntity<?> getScheduleCinema(@PathVariable Integer movie_id, String schedule_date){
+    @GetMapping("/{movie_id}/{schedule_date}")
+    public ResponseEntity<?> getScheduleCinema(@PathVariable Integer movie_id, @PathVariable String schedule_date){
         return ResponseEntity.ok(scheduleService.getScheduleCinema(movie_id, schedule_date));
     }
 }

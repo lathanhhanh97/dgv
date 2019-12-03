@@ -16,5 +16,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     //Thêm user vào dữ liệu ;
     @Query(value = "INSERT INTO `users`(`username`, `password`, `user_avatar`, `user_fullname`, `user_birthday`, `user_gender`, `user_email`, `user_city`, `user_phone`, `user_point`) VALUES ('?1','?2','?3','?4','?5','?6','?7','?8','?9', 0)", nativeQuery = true)
     ResponseData registerUser(String username);
+    //update
+    @Query(value = "UPDATE `users` SET ,`username`= ?1, `user_fullname`=?2,`user_birthday`=?3,`user_gender`=?4,`user_email`=?5,`user_city`=?6,`user_phone`=?7 WHERE `user_id`= ?8", nativeQuery = true)
+    String updateUser(String username, String user_fullname, String user_birtday, Integer user_gender, String user_email, String user_city, String user_phone, Integer user_id);
 
 }

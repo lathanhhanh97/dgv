@@ -2,6 +2,7 @@ package com.thanhhanh.beta.entity;
 
 import com.thanhhanh.beta.model.ResponseCinema;
 import com.thanhhanh.beta.model.ResponseFormat;
+import com.thanhhanh.beta.model.ResponseScheduleCinema;
 import com.thanhhanh.beta.model.ResponseScheduleTime;
 
 import javax.persistence.*;
@@ -35,14 +36,32 @@ import javax.persistence.*;
                                 @ColumnResult(name = "cinema_address")
                         }
                 )
+        ),
+        @SqlResultSetMapping(
+                name = "showSchedule",
+                classes = @ConstructorResult(
+                        targetClass = ResponseScheduleCinema.class,
+                        columns = {
+                                @ColumnResult(name = "cinema_id"),
+                                @ColumnResult(name = "cinema_name"),
+                                @ColumnResult(name = "cinema_address"),
+                                @ColumnResult(name = "cinema_data", type= String.class)
+                        }
+                )
         )
+
 })
 @NamedNativeQuery(name = "getScheduleTimeByFilm", resultSetMapping = "ResponseScheduleTime",
-query = "SELECT `schedule`.`schedule_id`, `schedule`.`schedule_start` FROM `movies`,`schedule`,`room`,`cinemas` WHERE `movies`.`movie_id` = `schedule`.`movie_id` AND `schedule`.`room_id` = `room`.`room_id`AND `room`.`cinema_id` = `cinemas`.`cinema_id` AND `movies`.`movie_id` = ?1 AND `schedule`.`schedule_date` = ?2 AND `cinemas`.`cinema_id` = ?3")
+        query = "SELECT `schedule`.`schedule_id`, `schedule`.`schedule_start` FROM `movies`,`schedule`,`room`,`cinemas` WHERE `movies`.`movie_id` = `schedule`.`movie_id` AND `schedule`.`room_id` = `room`.`room_id`AND `room`.`cinema_id` = `cinemas`.`cinema_id` AND `movies`.`movie_id` = ?1 AND `schedule`.`schedule_date` = ?2 AND `cinemas`.`cinema_id` = ?3")
+
 @NamedNativeQuery(name = "getScheduleFormat", resultSetMapping = "ResponseFormat",
-query = "SELECT `movies`.`movie_format` FROM `movies`,`schedule`,`room`,`cinemas` WHERE `movies`.`movie_id` = `schedule`.`movie_id` AND `schedule`.`room_id` = `room`.`room_id`AND `room`.`cinema_id` = `cinemas`.`cinema_id` AND `movies`.`movie_id` = ?1 AND `schedule`.`schedule_date` = ?2 AND `cinemas`.`cinema_id` = ?3 GROUP BY `movies`.`movie_format`")
+        query = "SELECT `movies`.`movie_format` FROM `movies`,`schedule`,`room`,`cinemas` WHERE `movies`.`movie_id` = `schedule`.`movie_id` AND `schedule`.`room_id` = `room`.`room_id`AND `room`.`cinema_id` = `cinemas`.`cinema_id` AND `movies`.`movie_id` = ?1 AND `schedule`.`schedule_date` = ?2 AND `cinemas`.`cinema_id` = ?3 GROUP BY `movies`.`movie_format`")
+
 @NamedNativeQuery(name = "getResponseCinema", resultSetMapping = "ResponseCinema",
-query = "SELECT `cinemas`.* FROM `cinemas`, `schedule`, `room` WHERE `schedule`.`room_id` = `room`.`room_id` AND `room`.`cinema_id` = `cinemas`.`cinema_id` AND `schedule`.`movie_id` = ?1 AND `schedule`.`schedule_date` = ?2")
+        query = "SELECT `cinemas`.* FROM `cinemas`, `schedule`, `room` WHERE `schedule`.`room_id` = `room`.`room_id` AND `room`.`cinema_id` = `cinemas`.`cinema_id` AND `schedule`.`movie_id` = ?1 AND `schedule`.`schedule_date` = ?2")
+
+@NamedNativeQuery(name = "showSchedule", resultSetMapping = "showSchedule",
+        query = "SELECT cinema_id, cinema_name, cinema_address, (SELECT JSON_ARRAYAGG(JSON_OBJECT('format_film',d.movie_format,'format_data',d.format_data)) FROM (SELECT movie_format, JSON_ARRAYAGG(JSON_OBJECT('schedule_id', schedule.schedule_id, 'schedule_start', TIME_FORMAT(schedule.schedule_start, \"%H:%i\"))) AS format_data FROM movies movies INNER JOIN schedule schedule ON schedule.movie_id = movies.movie_id INNER JOIN room room ON room.room_id = schedule.room_id WHERE schedule.schedule_date = '2019-11-20' AND room.cinema_id = cinema_id  GROUP BY movies.movie_format) d ) AS cinema_data FROM cinemas cinemas")
 @Entity
 @Table(name = "schedule")
 public class Schedule {

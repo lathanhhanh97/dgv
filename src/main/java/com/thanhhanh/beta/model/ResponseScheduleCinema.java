@@ -1,21 +1,37 @@
 package com.thanhhanh.beta.model;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class ResponseScheduleCinema {
+    @JsonProperty("cinema_id")
     private int cinemaId;
+    @JsonProperty("cinema_name")
     private String cinemaName;
+    @JsonProperty("cinema_address")
     private String cinemaAddress;
-    private List<ResponseFormatFilm> data;
+    @JsonProperty("cinema_data")
+    private ArrayList<ResponseFormatFilm> cinemaData;
 
     public ResponseScheduleCinema() {
     }
 
-    public ResponseScheduleCinema(int cinemaId, String cinemaName, String cinemaAddress, List<ResponseFormatFilm> data) {
+    public ResponseScheduleCinema(int cinemaId, String cinemaName, String cinemaAddress, Object cinemaData) {
         this.cinemaId = cinemaId;
         this.cinemaName = cinemaName;
         this.cinemaAddress = cinemaAddress;
-        this.data = data;
+        if (cinemaData != null) {
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                this.cinemaData = mapper.readValue((String) cinemaData, new TypeReference<ArrayList<ResponseFormatFilm>>(){});
+            } catch (IOException e) {
+                this.cinemaData = null;
+            }
+        }
     }
 
     public int getCinemaId() {
@@ -42,11 +58,11 @@ public class ResponseScheduleCinema {
         this.cinemaAddress = cinemaAddress;
     }
 
-    public List<ResponseFormatFilm> getData() {
-        return data;
+    public ArrayList<ResponseFormatFilm> getCinemaData() {
+        return cinemaData;
     }
 
-    public void setData(List<ResponseFormatFilm> data) {
-        this.data = data;
+    public void setCinemaData(ArrayList<ResponseFormatFilm> cinemaData) {
+        this.cinemaData = cinemaData;
     }
 }

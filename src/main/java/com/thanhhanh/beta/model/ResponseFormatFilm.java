@@ -1,17 +1,22 @@
 package com.thanhhanh.beta.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResponseFormatFilm {
+    @JsonProperty("format_film")
     private String formatFilm;
-    private List<ResponseScheduleTime> data;
+    @JsonProperty("format_data")
+    private ArrayList<ResponseScheduleTime> formatData;
 
     public ResponseFormatFilm() {
     }
 
-    public ResponseFormatFilm(String formatFilm, List<ResponseScheduleTime> data) {
+    public ResponseFormatFilm(String formatFilm, ArrayList<ResponseScheduleTime> formatData) {
         this.formatFilm = formatFilm;
-        this.data = data;
+        this.formatData = formatData;
     }
 
     public String getFormatFilm() {
@@ -22,11 +27,11 @@ public class ResponseFormatFilm {
         this.formatFilm = formatFilm;
     }
 
-    public List<ResponseScheduleTime> getData() {
-        return data;
+    public ArrayList<ResponseScheduleTime> getFormatData() {
+        return formatData;
     }
 
-    public void setData(List<ResponseScheduleTime> data) {
-        this.data = data;
+    public void setFormatData(ArrayList<ResponseScheduleTime> formatData) {
+        this.formatData = formatData;
     }
 }

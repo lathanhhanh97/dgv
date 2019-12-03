@@ -22,29 +22,6 @@ public class ScheduleService {
     CinemaRepository cinemaRepository;
 
     public ResponseData<ResponseScheduleCinema> getScheduleCinema(Integer movie_id, String schedule_date){
-        if(cinemaRepository.getScheduleCinema(movie_id, schedule_date).size() == 0){
-            return new ResponseData(HttpStatus.NOT_FOUND, "failed", cinemaRepository.getScheduleCinema(movie_id, schedule_date));
-        }else{
-            List<ResponseScheduleCinema> data = new ArrayList<ResponseScheduleCinema>();
-            for(int i=0; i< scheduleRepository.getScheduleCinema(movie_id, schedule_date).size(); i++){
-                ResponseScheduleCinema rp = new ResponseScheduleCinema();
-
-                rp.setCinemaId(scheduleRepository.getScheduleCinema(movie_id, schedule_date).get(i).getCinemaId());
-                rp.setCinemaName(scheduleRepository.getScheduleCinema(movie_id, schedule_date).get(i).getCinemaName());
-                rp.setCinemaAddress(scheduleRepository.getScheduleCinema(movie_id, schedule_date).get(i).getCinemaAddress());
-
-                List<ResponseFormatFilm> listff = new ArrayList<ResponseFormatFilm>();
-                ResponseFormatFilm ff = new ResponseFormatFilm();
-
-                ff.setFormatFilm(scheduleRepository.getFormat(movie_id, schedule_date, scheduleRepository.getScheduleCinema(movie_id, schedule_date).get(i).getCinemaId()));
-                ff.setData(scheduleRepository.getScheduleTimeByFilm(movie_id, schedule_date, scheduleRepository.getScheduleCinema(movie_id, schedule_date).get(i).getCinemaId()));
-
-                listff.add(ff);
-                rp.setData(listff);
-
-                data.add(rp);
-            }
-            return new ResponseData(HttpStatus.OK, "success", cinemaRepository.getScheduleCinema(movie_id, schedule_date));
-        }
+        return new ResponseData(HttpStatus.OK,"success", scheduleRepository.getSchedule(movie_id, schedule_date));
     }
 }

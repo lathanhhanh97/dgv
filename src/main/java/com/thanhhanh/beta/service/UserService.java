@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Service
 public class UserService {
     @Autowired
@@ -18,5 +22,24 @@ public class UserService {
         }else{
             return new ResponseData(HttpStatus.OK, "success", userRepository.getUserById(user_id));
         }
+    }
+
+    public ResponseData<String> updateUser(Integer user_id, UserNameProfile user) throws ParseException {
+        UserNameProfile u = userRepository.getUserById(user_id);
+        u.setUsername(user.getUsername());
+        u.setUserFullname(user.getUserFullname());
+
+        SimpleDateFormat dt = new SimpleDateFormat("yyyy-mm-dd");
+        Date date = dt.parse(user.getUserBirthday());
+
+        u.setUserBirthday(dt.format(date));
+        u.setUserGender(user.getUserGender());
+        u.setUserEmail(user.getUserEmail());
+        u.setUserCity(user.getUserCity());
+        u.setUserPhone(user.getUserPhone());
+
+        userRepository.updateUser(user.getUsername(), user.getUserFullname(),dt.format(date), user.getUserGender(), user.getUserEmail(), user.getUserCity(),user.getUserPhone(), user_id);
+
+        return new ResponseData(HttpStatus.OK, "success", userRepository.updateUser(user.getUsername(), user.getUserFullname(),dt.format(date), user.getUserGender(), user.getUserEmail(), user.getUserCity(),user.getUserPhone(), user_id));
     }
 }

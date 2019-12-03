@@ -1,15 +1,19 @@
 package com.thanhhanh.beta.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ResponseScheduleTime {
+    @JsonProperty("schedule_id")
     private int scheduleId;
-    private String scheduleStart;
+    @JsonProperty("schedule_start")
+    private String start;
 
     public ResponseScheduleTime() {
     }
 
     public ResponseScheduleTime(int scheduleId, String scheduleStart) {
         this.scheduleId = scheduleId;
-        this.scheduleStart = scheduleStart;
+        this.start = scheduleStart;
     }
 
     public int getScheduleId() {
@@ -21,10 +25,10 @@ public class ResponseScheduleTime {
     }
 
     public String getScheduleStart() {
-        return scheduleStart;
+        return start;
     }
 
     public void setScheduleStart(String scheduleStart) {
-        this.scheduleStart = scheduleStart;
+        this.start = scheduleStart;
     }
 }

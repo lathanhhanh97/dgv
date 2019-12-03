@@ -1,5 +1,6 @@
 package com.thanhhanh.beta.controller;
 
+import com.thanhhanh.beta.service.CinemaService;
 import com.thanhhanh.beta.service.ScheduleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,16 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class ScheduleController {
     @Autowired
     ScheduleService scheduleService;
+    @Autowired
+    CinemaService cinemaService;
 
     @ApiOperation(value = "Lấy rạp theo suất chiếu")
     @GetMapping("/{schedule_id}")
     public ResponseEntity<?> getCinemaByScheduleId(@PathVariable Integer schedule_id){
-        return ResponseEntity.ok(scheduleService.getCinemaByScheduleId(schedule_id));
+        return ResponseEntity.ok(cinemaService.getCinemaByScheduleId(schedule_id));
     }
 
     @ApiOperation(value = "Get suất chiếu")
-    @GetMapping("/{movie_id}/{date}")
-    public ResponseEntity<?> getScheduleCinema(@PathVariable Integer movie_id, String date){
-        return ResponseEntity.ok(scheduleService.getScheduleCinema(movie_id, date));
+    @GetMapping("/film/{movie_id}/{date}")
+    public ResponseEntity<?> getScheduleCinema(@PathVariable Integer movie_id, String schedule_date){
+        return ResponseEntity.ok(scheduleService.getScheduleCinema(movie_id, schedule_date));
     }
 }

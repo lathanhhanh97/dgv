@@ -11,8 +11,8 @@ import javax.persistence.*;
                 classes = @ConstructorResult(
                         targetClass = ResponseScheduleTime.class,
                         columns = {
-                                @ColumnResult(name = "schedule_id"),
-                                @ColumnResult(name = "schedule_start")
+                                @ColumnResult(name = "schedule_id", type = Integer.class),
+                                @ColumnResult(name = "schedule_start", type = String.class)
                         }
                 )
         ),
@@ -41,7 +41,7 @@ import javax.persistence.*;
 query = "SELECT `schedule`.`schedule_id`, `schedule`.`schedule_start` FROM `movies`,`schedule`,`room`,`cinemas` WHERE `movies`.`movie_id` = `schedule`.`movie_id` AND `schedule`.`room_id` = `room`.`room_id`AND `room`.`cinema_id` = `cinemas`.`cinema_id` AND `movies`.`movie_id` = ?1 AND `schedule`.`schedule_date` = ?2 AND `cinemas`.`cinema_id` = ?3")
 @NamedNativeQuery(name = "getScheduleFormat", resultSetMapping = "ResponseFormat",
 query = "SELECT `movies`.`movie_format` FROM `movies`,`schedule`,`room`,`cinemas` WHERE `movies`.`movie_id` = `schedule`.`movie_id` AND `schedule`.`room_id` = `room`.`room_id`AND `room`.`cinema_id` = `cinemas`.`cinema_id` AND `movies`.`movie_id` = ?1 AND `schedule`.`schedule_date` = ?2 AND `cinemas`.`cinema_id` = ?3 GROUP BY `movies`.`movie_format`")
-@NamedNativeQuery(name = "ResponseCinema", resultSetMapping = "ResponseCinema",
+@NamedNativeQuery(name = "getResponseCinema", resultSetMapping = "ResponseCinema",
 query = "SELECT `cinemas`.* FROM `cinemas`, `schedule`, `room` WHERE `schedule`.`room_id` = `room`.`room_id` AND `room`.`cinema_id` = `cinemas`.`cinema_id` AND `schedule`.`movie_id` = ?1 AND `schedule`.`schedule_date` = ?2")
 @Entity
 @Table(name = "schedule")

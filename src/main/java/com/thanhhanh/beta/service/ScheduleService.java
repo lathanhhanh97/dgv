@@ -4,6 +4,7 @@ import com.thanhhanh.beta.entity.Cinema;
 import com.thanhhanh.beta.model.ResponseData;
 import com.thanhhanh.beta.model.ResponseFormatFilm;
 import com.thanhhanh.beta.model.ResponseScheduleCinema;
+import com.thanhhanh.beta.repository.CinemaRepository;
 import com.thanhhanh.beta.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,29 +18,33 @@ public class ScheduleService {
     @Autowired
     ScheduleRepository scheduleRepository;
 
-    public ResponseData<Cinema> getCinemaByScheduleId(Integer schedule_id){
-        return new ResponseData(HttpStatus.OK, "success", scheduleRepository.getCinemasByIdSchedule(schedule_id));
-    }
+    @Autowired
+    CinemaRepository cinemaRepository;
 
-    public ResponseData<ResponseScheduleCinema> getScheduleCinema(Integer schedule_id, String schedule_date){
-        if(scheduleRepository.getScheduleCinema(schedule_id, schedule_date).size() == 0){
-            return new ResponseData(HttpStatus.NOT_FOUND, "failed", scheduleRepository.getScheduleCinema(schedule_id, schedule_date));
+    public ResponseData<ResponseScheduleCinema> getScheduleCinema(Integer movie_id, String schedule_date){
+        if(cinemaRepository.getScheduleCinema(movie_id, schedule_date).size() == 0){
+            return new ResponseData(HttpStatus.NOT_FOUND, "failed", cinemaRepository.getScheduleCinema(movie_id, schedule_date));
         }else{
-            List<ResponseScheduleCinema> data = new ArrayList<>();
-            for(int i=0; i< scheduleRepository.getScheduleCinema(schedule_id, schedule_date).size(); i++){
+            List<ResponseScheduleCinema> data = new ArrayList<ResponseScheduleCinema>();
+            for(int i=0; i< scheduleRepository.getScheduleCinema(movie_id, schedule_date).size(); i++){
                 ResponseScheduleCinema rp = new ResponseScheduleCinema();
-                rp.setCinemaId(scheduleRepository.getScheduleCinema(schedule_id, schedule_date).get(i).getCinemaId());
-                rp.setCinemaName(scheduleRepository.getScheduleCinema(schedule_id, schedule_date).get(i).getCinemaName());
-                rp.setCinemaAddress(scheduleRepository.getScheduleCinema(schedule_id, schedule_date).get(i).getCinemaAddress());
-                List<ResponseFormatFilm> listff = new ArrayList<>();
+
+                rp.setCinemaId(scheduleRepository.getScheduleCinema(movie_id, schedule_date).get(i).getCinemaId());
+                rp.setCinemaName(scheduleRepository.getScheduleCinema(movie_id, schedule_date).get(i).getCinemaName());
+                rp.setCinemaAddress(scheduleRepository.getScheduleCinema(movie_id, schedule_date).get(i).getCinemaAddress());
+
+                List<ResponseFormatFilm> listff = new ArrayList<ResponseFormatFilm>();
                 ResponseFormatFilm ff = new ResponseFormatFilm();
-                ff.setFormatFilm(scheduleRepository.getFormat(schedule_id, schedule_date, scheduleRepository.getScheduleCinema(schedule_id, schedule_date).get(i).getCinemaId()));
-                ff.setData(scheduleRepository.getScheduleTimeByFilm(schedule_id, schedule_date, scheduleRepository.getScheduleCinema(schedule_id, schedule_date).get(i).getCinemaId()));
+
+                ff.setFormatFilm(scheduleRepository.getFormat(movie_id, schedule_date, scheduleRepository.getScheduleCinema(movie_id, schedule_date).get(i).getCinemaId()));
+                ff.setData(scheduleRepository.getScheduleTimeByFilm(movie_id, schedule_date, scheduleRepository.getScheduleCinema(movie_id, schedule_date).get(i).getCinemaId()));
+
                 listff.add(ff);
                 rp.setData(listff);
+
                 data.add(rp);
             }
-            return new ResponseData(HttpStatus.OK, "success", data);
+            return new ResponseData(HttpStatus.OK, "success", cinemaRepository.getScheduleCinema(movie_id, schedule_date));
         }
     }
 }

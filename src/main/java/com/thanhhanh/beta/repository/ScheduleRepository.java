@@ -2,6 +2,7 @@ package com.thanhhanh.beta.repository;
 
 import com.thanhhanh.beta.entity.Cinema;
 import com.thanhhanh.beta.entity.Schedule;
+import com.thanhhanh.beta.model.ResponseCinema;
 import com.thanhhanh.beta.model.ResponseFormat;
 import com.thanhhanh.beta.model.ResponseFormatFilm;
 import com.thanhhanh.beta.model.ResponseScheduleTime;
@@ -13,15 +14,13 @@ import java.util.List;
 
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
-    @Query(value = "SELECT `cinemas`.* FROM `cinemas`,`schedule`, `room` WHERE `schedule`.`room_id` = `room`.`room_id` AND `room`.`cinema_id`  = `cinemas`.`cinema_id` AND `schedule`.`schedule_id` = ?1", nativeQuery = true)
-    Cinema getCinemasByIdSchedule(Integer schedule_id);
 
-    @Query(nativeQuery = true, name = "ResponseCinema")
-    List<Cinema> getScheduleCinema(Integer schedule_id, String schedule_date);
+    @Query(nativeQuery = true, name = "getResponseCinema")
+    List<ResponseCinema> getScheduleCinema(Integer movie_id, String schedule_date);
 
     @Query(name = "getScheduleFormat", nativeQuery = true)
-    String getFormat(Integer schedule_id, String schedule_date, Integer cinema_id);
+    String getFormat(Integer movie_id, String schedule_date, Integer cinema_id);
 
     @Query(name = "getScheduleTimeByFilm", nativeQuery = true)
-    List<ResponseScheduleTime>  getScheduleTimeByFilm(Integer schedule_id, String schedule_date, Integer cinema_id);
+    List<ResponseScheduleTime>  getScheduleTimeByFilm(Integer movie_id, String schedule_date, Integer cinema_id);
 }

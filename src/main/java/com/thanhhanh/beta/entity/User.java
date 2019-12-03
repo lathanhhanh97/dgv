@@ -1,6 +1,32 @@
 package com.thanhhanh.beta.entity;
 
+import com.thanhhanh.beta.model.UserNameProfile;
+
 import javax.persistence.*;
+
+@SqlResultSetMappings({
+        @SqlResultSetMapping(
+                name = "UserNameProfile",
+                classes = @ConstructorResult(
+                        targetClass = UserNameProfile.class,
+                        columns = {
+                                @ColumnResult(name = "user_id", type = Integer.class),
+                                @ColumnResult(name = "username", type = String.class),
+                                @ColumnResult(name = "user_avatar", type = String.class),
+                                @ColumnResult(name = "user_fullname", type = String.class),
+                                @ColumnResult(name = "user_birthday", type = String.class),
+                                @ColumnResult(name = "user_gender", type = Integer.class),
+                                @ColumnResult(name = "user_email", type = String.class),
+                                @ColumnResult(name = "user_city", type = String.class),
+                                @ColumnResult(name = "user_phone", type = String.class),
+                                @ColumnResult(name = "user_point", type = Integer.class)
+                        }
+                )
+        )
+})
+@NamedNativeQuery(name = "getUserNameProfile", resultSetMapping = "UserNameProfile",
+query = "SELECT `user_id`,`username`,`user_avatar`,`user_fullname`,DATE_FORMAT(`user_birthday`, \"%d/%m/%Y\") as `user_birthday`,`user_gender`,`user_email`,`user_city`,`user_phone`,`user_point` FROM `users` WHERE `user_id` = ?1")
+
 
 @Entity
 @Table(name = "users")

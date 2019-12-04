@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(description = "Api booking")
 @RequestMapping("/book")
 public class BookController {
-
+    
 }

@@ -40,7 +40,7 @@ public class User {
     private String username;
 
     @Column(name = "password")
-    private int password;
+    private String password;
 
     @Column(name = "user_avatar")
     private String userAvatar;
@@ -57,13 +57,16 @@ public class User {
     @Column(name = "user_email")
     private String userEmail;
 
+    @Column(name = "user_phone")
+    private String userPhone;
+
     @Column(name = "user_city")
     private String userCity;
 
     public User() {
     }
 
-    public User(String username, int password, String userAvatar, String userFullname, String userBirthday, String userGender, String userEmail, String userCity) {
+    public User(String username, String password, String userAvatar, String userFullname, String userBirthday, String userGender, String userEmail, String userCity) {
         this.username = username;
         this.password = password;
         this.userAvatar = userAvatar;
@@ -90,11 +93,11 @@ public class User {
         this.username = username;
     }
 
-    public int getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(int password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -136,6 +139,14 @@ public class User {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userEmail) {
+        this.userPhone = userPhone;
     }
 
     public String getUserCity() {

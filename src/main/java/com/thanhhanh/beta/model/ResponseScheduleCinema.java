@@ -12,22 +12,19 @@ public class ResponseScheduleCinema {
     private int cinemaId;
     @JsonProperty("cinema_name")
     private String cinemaName;
-    @JsonProperty("cinema_address")
-    private String cinemaAddress;
     @JsonProperty("cinema_data")
-    private ArrayList<ResponseFormatFilm> cinemaData;
+    private ArrayList<ResponseScheduleTime> cinemaData;
 
     public ResponseScheduleCinema() {
     }
 
-    public ResponseScheduleCinema(int cinemaId, String cinemaName, String cinemaAddress, Object cinemaData) {
+    public ResponseScheduleCinema(int cinemaId, String cinemaName, Object cinemaData) {
         this.cinemaId = cinemaId;
         this.cinemaName = cinemaName;
-        this.cinemaAddress = cinemaAddress;
         if (cinemaData != null) {
             ObjectMapper mapper = new ObjectMapper();
             try {
-                this.cinemaData = mapper.readValue((String) cinemaData, new TypeReference<ArrayList<ResponseFormatFilm>>(){});
+                this.cinemaData = mapper.readValue((String) cinemaData, new TypeReference<ArrayList<ResponseScheduleTime>>(){});
             } catch (IOException e) {
                 this.cinemaData = null;
             }
@@ -50,19 +47,11 @@ public class ResponseScheduleCinema {
         this.cinemaName = cinemaName;
     }
 
-    public String getCinemaAddress() {
-        return cinemaAddress;
-    }
-
-    public void setCinemaAddress(String cinemaAddress) {
-        this.cinemaAddress = cinemaAddress;
-    }
-
-    public ArrayList<ResponseFormatFilm> getCinemaData() {
+    public ArrayList<ResponseScheduleTime> getCinemaData() {
         return cinemaData;
     }
 
-    public void setCinemaData(ArrayList<ResponseFormatFilm> cinemaData) {
+    public void setCinemaData(ArrayList<ResponseScheduleTime> cinemaData) {
         this.cinemaData = cinemaData;
     }
 }

@@ -6,14 +6,17 @@ public class ResponseScheduleTime {
     @JsonProperty("schedule_id")
     private int scheduleId;
     @JsonProperty("schedule_start")
-    private String start;
+    private String scheduleStart;
+    @JsonProperty("seat_empty")
+    private String seatEmpty;
 
     public ResponseScheduleTime() {
     }
 
-    public ResponseScheduleTime(int scheduleId, String scheduleStart) {
+    public ResponseScheduleTime(int scheduleId, String scheduleStart, String seatEmpty) {
         this.scheduleId = scheduleId;
-        this.start = scheduleStart;
+        this.scheduleStart = scheduleStart;
+        this.seatEmpty = seatEmpty;
     }
 
     public int getScheduleId() {
@@ -25,10 +28,18 @@ public class ResponseScheduleTime {
     }
 
     public String getScheduleStart() {
-        return start;
+        return scheduleStart;
     }
 
     public void setScheduleStart(String scheduleStart) {
-        this.start = scheduleStart;
+        this.scheduleStart = scheduleStart;
+    }
+
+    public String getSeatEmpty() {
+        return seatEmpty;
+    }
+
+    public void setSeatEmpty(String seatEmpty) {
+        this.seatEmpty = seatEmpty;
     }
 }

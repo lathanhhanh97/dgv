@@ -18,7 +18,7 @@
 - Lấy thông tin các suất chiếu
     > `localhost/schedule/movie_id/date`
                         
-   - Trong đó `movie_id` là id của bộ phim, `date` là ngày có suất chiếu của bộ phim `movie_id`. 
+   - Trong đó `movie_id` là id của bộ phim, `date` là ngày (định dạng YYYY-mm-dd) có suất chiếu của bộ phim `movie_id`. 
   
   <img src="https://i.imgur.com/hAx2KkZ.jpg">
 - Thực hiện đặt vé

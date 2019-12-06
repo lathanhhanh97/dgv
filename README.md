@@ -13,3 +13,6 @@
 ### Lỗi bị chiếm port và không chạy được
 - Cách sửa: thay đổi port trong file application.properties
 `server.port=80`
+## Các việc trong tuần tới
+- Hoàn thiện chức năng đăng kí, đăng nhập cùng với jwt
+- Tiến hành ghép api với front-end

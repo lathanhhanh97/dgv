@@ -2,8 +2,10 @@
 ## Mô tả dự án
 - Xây dựng hệ thống back-end cho ứng dụng đặt vé xem phim
 - Sử dụng: Java Spring Boot & MySQL 5.7
-- Thiết kế Database
-    <img src="https://i.imgur.com/S1YxbiY.png">
+- Ứng deploy trên heroku: [https://dgvapi.herokuapp.com/swagger-ui.html](https://dgvapi.herokuapp.com/swagger-ui.html)
+- Thiết kế Database 
+    [Link Dbdiagram](https://dbdiagram.io/d/5de9c01cedf08a25543ec5c0)
+    <img src="https://i.imgur.com/KP4LLZ6.png">
 
 ## Các chức năng chính của hệ thống
 - Lấy dữ liệu thông tin phim đang chiếu
@@ -21,6 +23,7 @@
   <img src="https://i.imgur.com/hAx2KkZ.jpg">
 - Thực hiện đặt vé
 - Đăng kí, đăng nhập 
+- [Bấm vào đây](https://dgvapi.herokuapp.com/swagger-ui.html) để xem các api và chạy thử.
 ## Thực hiện cái đặt
 - Thực hiện lệnh 
     > `git clone https://github.com/lathanhhanh97/dgv.git`

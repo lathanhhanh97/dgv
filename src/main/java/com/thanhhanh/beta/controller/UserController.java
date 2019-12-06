@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.text.ParseException;
+import java.util.HashMap;
 
 @RestController
 @Api(value = "Api user")
@@ -26,9 +27,9 @@ public class UserController {
     }
 
     @ApiOperation(value = "Đăng ký user")
-    @GetMapping("/register")
-    public ResponseEntity<?> registerUser(){
-        return null;
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody User user){
+        return ResponseEntity.ok(userService.registerUser(user));
     }
 
     @ApiOperation(value = "Cập nhật user")

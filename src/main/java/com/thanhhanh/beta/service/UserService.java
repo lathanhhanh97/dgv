@@ -1,5 +1,6 @@
 package com.thanhhanh.beta.service;
 
+import com.thanhhanh.beta.entity.User;
 import com.thanhhanh.beta.model.ResponseData;
 import com.thanhhanh.beta.model.UserNameProfile;
 import com.thanhhanh.beta.repository.UserRepository;
@@ -41,5 +42,19 @@ public class UserService {
         userRepository.updateUser(user.getUsername(), user.getUserFullname(),dt.format(date), user.getUserGender(), user.getUserEmail(), user.getUserCity(),user.getUserPhone(), user_id);
 
         return new ResponseData(HttpStatus.OK, "success", userRepository.updateUser(user.getUsername(), user.getUserFullname(),dt.format(date), user.getUserGender(), user.getUserEmail(), user.getUserCity(),user.getUserPhone(), user_id));
+    }
+
+    public ResponseData<Integer> registerUser(User user){
+        if(userRepository.findByUsername(user.getUsername()) == null){
+            String avt;
+            if(user.getUserGender() == 1){
+                avt = "http://lathanhhanh.tk/src/beta/img/trai.jpg";
+            }else{
+                avt = "http://lathanhhanh.tk/src/beta/img/gai.jpg";
+            }
+            return new ResponseData(HttpStatus.OK, "success", userRepository.registerUser(user.getUsername(), user.getPassword(), avt, user.getUserFullname(), user.getUserBirthday(), user.getUserGender(), user.getUserEmail(), user.getUserCity(), user.getUserPhone()));
+        }else{
+            return new ResponseData(HttpStatus.OK, "username exits", 0);
+        }
     }
 }

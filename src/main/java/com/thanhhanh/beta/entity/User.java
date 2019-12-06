@@ -52,7 +52,7 @@ public class User {
     private String userBirthday;
 
     @Column(name = "user_gender")
-    private String userGender;
+    private int userGender;
 
     @Column(name = "user_email")
     private String userEmail;
@@ -66,16 +66,7 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, String userAvatar, String userFullname, String userBirthday, String userGender, String userEmail, String userCity) {
-        this.username = username;
-        this.password = password;
-        this.userAvatar = userAvatar;
-        this.userFullname = userFullname;
-        this.userBirthday = userBirthday;
-        this.userGender = userGender;
-        this.userEmail = userEmail;
-        this.userCity = userCity;
-    }
+
 
     public int getUserId() {
         return userId;
@@ -125,11 +116,11 @@ public class User {
         this.userBirthday = userBirthday;
     }
 
-    public String getUserGender() {
+    public int getUserGender() {
         return userGender;
     }
 
-    public void setUserGender(String userGender) {
+    public void setUserGender(int userGender) {
         this.userGender = userGender;
     }
 
@@ -145,7 +136,7 @@ public class User {
         return userPhone;
     }
 
-    public void setUserPhone(String userEmail) {
+    public void setUserPhone(String userPhone) {
         this.userPhone = userPhone;
     }
 

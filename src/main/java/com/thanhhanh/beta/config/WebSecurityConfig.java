@@ -70,7 +70,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/schedule/**",
                         "/book/create",
                         "/book/confirm",
-                        "/user/register"
+                        "/user/register",
+                        "/user/login"
                 ).permitAll()
                 //swagger
                 .antMatchers("/v2/api-docs",

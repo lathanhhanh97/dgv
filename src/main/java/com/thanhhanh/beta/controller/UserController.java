@@ -37,4 +37,10 @@ public class UserController {
     public ResponseEntity<?> updateUser(@PathVariable Integer id, @Valid @RequestBody UserNameProfile user) throws ParseException {
         return ResponseEntity.ok(userService.updateUser(id, user));
     }
+
+    @ApiOperation(value = "Đăng nhập - Get token login")
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@Valid @RequestBody HashMap<String, String> request){
+        return ResponseEntity.ok(userService.loginUser(request.get("username"), request.get("password")));
+    }
 }

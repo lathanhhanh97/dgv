@@ -11,13 +11,14 @@ import javax.persistence.*;
                         targetClass = ResponseSeatEmpty.class,
                         columns = {
                                 @ColumnResult(name = "seat_id"),
-                                @ColumnResult(name = "seat_type")
+                                @ColumnResult(name = "seat_type"),
+                                @ColumnResult(name = "seat_status", type = String.class)
                         }
                 )
         )
 })
-@NamedNativeQuery(name = "getSeatEmpty", resultSetMapping = "ResponseSeatEmpty",
-    query = "SELECT seats.seat_id, seats.seat_type FROM seats, room, schedule WHERE schedule.schedule_id = ?1 AND seats.room_id = room.room_id and room.room_id = schedule.room_id and seats.seat_id NOT IN (SELECT seat_id FROM booking) ORDER BY seats.seat_id, seats.seat_type")
+//@NamedNativeQuery(name = "getSeatEmpty", resultSetMapping = "ResponseSeatEmpty", query = "SELECT seats.seat_id, seats.seat_type,booking.seat_status FROM seats, room, schedule, booking WHERE schedule.schedule_id = ?1 AND seats.room_id = room.room_id AND room.room_id = schedule.room_id AND schedule.schedule_id = booking.schedule_id AND seats.seat_id NOT IN (SELECT seat_id FROM booking) ORDER BY seats.seat_id, seats.seat_type")
+@NamedNativeQuery(name = "getSeatEmpty", resultSetMapping = "ResponseSeatEmpty", query = "SELECT `seats`.`seat_id`, `seats`.`seat_type`, `booking`.`seat_status` FROM `schedule`, `seats` LEFT JOIN `booking` ON `seats`.`seat_id` = `booking`.`seat_id` WHERE `schedule`.`room_id` = `seats`.`room_id` AND `schedule`.`schedule_id` = ?1 ORDER BY `seats`.`seat_id`\n")
 
 
 @Entity

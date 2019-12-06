@@ -1,4 +1,4 @@
-# Xây dựng api cho rạp chiếu phim bằng Java Srping Boot
+# Xây dựng api cho ứng dụng đặt vé xem phim bằng Java Srping Boot
 ## Mô tả dự án
 - Xây dựng hệ thống back-end cho ứng dụng đặt vé xem phim
 - Sử dụng: Java Spring Boot & MySQL 5.7

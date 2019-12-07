@@ -62,14 +62,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(
                         "/authenticate",
-                        "/user",
                         "/seat/{schedule_id}/seat-empty",
-                        "/movies",
                         "/movies/now",
                         "/movies/future",
                         "/schedule/**",
-                        "/book/create",
-                        "/book/confirm",
                         "/user/register",
                         "/user/login"
                 ).permitAll()

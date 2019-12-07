@@ -35,5 +35,4 @@
 ### Không kết nối được đến CSDL
 - Cách fix lỗi: sử dụng `database.sql` import vào phpmyadmin và cấu hình lại kết nối trong file `application.properties`
 ## Các việc trong tuần tới
-- Hoàn thiện chức năng đăng kí, đăng nhập cùng với jwt
 - Tiến hành ghép api với front-end

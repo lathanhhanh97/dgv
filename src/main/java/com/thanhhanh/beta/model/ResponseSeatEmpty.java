@@ -8,15 +8,21 @@ public class ResponseSeatEmpty {
     private int seatId;
     @Column(name = "seat_type")
     private String seatType;
+    @Column(name = "seat_row")
+    private String seatRow;
+    @Column(name = "seat_number")
+    private int seatNumber;
     @Column(name = "seat_status")
     private String seatStatus;
 
     public ResponseSeatEmpty() {
     }
 
-    public ResponseSeatEmpty(int seatId, String seatType, String seatStatus) {
+    public ResponseSeatEmpty(int seatId, String seatType, String seatRow, int seatNumber, String seatStatus) {
         this.seatId = seatId;
         this.seatType = seatType;
+        this.seatRow = seatRow;
+        this.seatNumber = seatNumber;
         this.seatStatus = seatStatus;
     }
 
@@ -34,6 +40,22 @@ public class ResponseSeatEmpty {
 
     public void setSeatType(String seatType) {
         this.seatType = seatType;
+    }
+
+    public String getSeatRow() {
+        return seatRow;
+    }
+
+    public void setSeatRow(String seatRow) {
+        this.seatRow = seatRow;
+    }
+
+    public int getSeatNumber() {
+        return seatNumber;
+    }
+
+    public void setSeatNumber(int seatNumber) {
+        this.seatNumber = seatNumber;
     }
 
     public String getSeatStatus() {

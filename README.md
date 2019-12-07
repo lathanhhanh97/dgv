@@ -26,7 +26,7 @@
 - Thực hiện đặt vé
 - Đăng kí, đăng nhập 
 - [Bấm vào đây](https://dgv-cinema-api.herokuapp.com/swagger-ui.html) để xem các api và chạy thử.
-## Thực hiện cái đặt
+## Thực hiện cài đặt
 - Thực hiện lệnh 
     > `git clone https://github.com/lathanhhanh97/dgv.git`
 - Có thể sử dụng các IDE hỗ trợ Java Spring Boot để chạy ứng dụng

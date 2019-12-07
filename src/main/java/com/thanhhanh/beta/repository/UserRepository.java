@@ -25,4 +25,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     String updateUser(String username, String user_fullname, String user_birtday, Integer user_gender, String user_email, String user_city, String user_phone, Integer user_id);
 
     User findByUsername(String username);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM `users` WHERE `user_email` = ?1")
+    User findByEmail(String email);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM `users` WHERE `user_phone` = ?1")
+    User findByPhone(String email);
 }

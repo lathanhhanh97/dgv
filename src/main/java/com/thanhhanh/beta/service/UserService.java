@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -28,6 +29,9 @@ public class UserService {
 
     @Autowired
     private JwtToken token;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public ResponseData<UserNameProfile> getUserById(Integer user_id){
         if(userRepository.getUserById(user_id) == null){
@@ -57,17 +61,23 @@ public class UserService {
     }
 
     public ResponseData<Integer> registerUser(User user){
-        if(userRepository.findByUsername(user.getUsername()) == null){
-            String avt;
-            if(user.getUserGender() == 1){
-                avt = "http://lathanhhanh.tk/src/beta/img/trai.jpg";
-            }else{
-                avt = "http://lathanhhanh.tk/src/beta/img/gai.jpg";
-            }
-            return new ResponseData(HttpStatus.OK, "success", userRepository.registerUser(user.getUsername(), user.getPassword(), avt, user.getUserFullname(), user.getUserBirthday(), user.getUserGender(), user.getUserEmail(), user.getUserCity(), user.getUserPhone()));
-        }else{
-            return new ResponseData(HttpStatus.OK, "username exits", 0);
+        if(userRepository.findByUsername(user.getUsername()) != null){
+            return new ResponseData(HttpStatus.OK, "username exist", 0);
         }
+        if(userRepository.findByEmail(user.getUserEmail()) != null){
+            return new ResponseData(HttpStatus.OK, "email exist", 0);
+        }
+        if(userRepository.findByPhone(user.getUserPhone()) != null){
+            return new ResponseData(HttpStatus.OK, "phone exist", 0);
+        }
+
+        String avt;
+        if(user.getUserGender() == 1){
+            avt = "http://lathanhhanh.tk/src/beta/img/trai.jpg";
+        }else{
+            avt = "http://lathanhhanh.tk/src/beta/img/gai.jpg";
+        }
+        return new ResponseData(HttpStatus.OK, "success", userRepository.registerUser(user.getUsername(), passwordEncoder.encode(user.getPassword()), avt, user.getUserFullname(), user.getUserBirthday(), user.getUserGender(), user.getUserEmail(), user.getUserCity(), user.getUserPhone()));
     }
 
     public ResponseData<String> loginUser(String username, String password){

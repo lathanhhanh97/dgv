@@ -14,9 +14,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 @Service
@@ -33,34 +35,10 @@ public class UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public ResponseData<UserNameProfile> getUserById(Integer user_id){
-        if(userRepository.getUserById(user_id) == null){
-            return new ResponseData(HttpStatus.NOT_FOUND, "failed", null);
-        }else{
-            return new ResponseData(HttpStatus.OK, "success", userRepository.getUserById(user_id));
-        }
-    }
-
-    public ResponseData<String> updateUser(Authentication authentication, UserNameProfile user) throws ParseException {
+    public ResponseData<String> updateUser(Authentication authentication, UserNameProfile user){
         Integer userId = userRepository.findIdByUsername(authentication.getName());
-
-        UserNameProfile u = userRepository.getUserById(userId);
-        u.setUsername(user.getUsername());
-        u.setUserFullname(user.getUserFullname());
-
-        SimpleDateFormat dt = new SimpleDateFormat("yyyy-mm-dd");
-        Date date = dt.parse(user.getUserBirthday());
-
-        u.setUserBirthday(dt.format(date));
-        u.setUserGender(user.getUserGender());
-        u.setUserEmail(user.getUserEmail());
-        u.setUserCity(user.getUserCity());
-        u.setUserPhone(user.getUserPhone());
-
-
-        userRepository.updateUser(user.getUsername(), user.getUserFullname(), dt.format(date), user.getUserGender(), user.getUserEmail(), user.getUserCity(),user.getUserPhone(), userId);
-
-        return new ResponseData(HttpStatus.OK, "success", userRepository.updateUser(user.getUsername(), user.getUserFullname(),dt.format(date), user.getUserGender(), user.getUserEmail(), user.getUserCity(),user.getUserPhone(), userId));
+        Integer rs = userRepository.updateUser(user.getUsername(), user.getUserFullname(), user.getUserBirthday(), user.getUserGender(), user.getUserEmail(), user.getUserCity(), user.getUserPhone(), userId);
+        return new ResponseData(HttpStatus.OK, "success", rs);
     }
 
     public ResponseData<Integer> registerUser(User user){

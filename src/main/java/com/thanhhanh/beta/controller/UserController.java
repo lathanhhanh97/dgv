@@ -21,12 +21,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @ApiOperation(value = "Lấy thông tin user bằng user_id")
-    @GetMapping("/{user_id}")
-    public ResponseEntity<?> getUserById(@PathVariable Integer user_id){
-        return ResponseEntity.ok(userService.getUserById(user_id));
-    }
-
     @ApiOperation(value = "Đăng ký user")
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user){

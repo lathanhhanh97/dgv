@@ -6,10 +6,12 @@ import com.thanhhanh.beta.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class MovieSevice {
@@ -21,18 +23,20 @@ public class MovieSevice {
     }
 
     public ResponseData<Movie> getMoviesNow(){
-        if(movieRepository.getMoviesNow() == null){
+        List<Movie> rs = movieRepository.getMoviesNow();
+        if(CollectionUtils.isEmpty(rs)){
             return new ResponseData(HttpStatus.NOT_FOUND, "failed", null);
         }else{
-            return new ResponseData(HttpStatus.OK, "success", movieRepository.getMoviesNow());
+            return new ResponseData(HttpStatus.OK, "success",rs);
         }
     }
 
     public ResponseData<Movie> getMoviesFuture(){
-        if(movieRepository.getMoviesFuture() == null){
+        List<Movie> rs = movieRepository.getMoviesFuture();
+        if(CollectionUtils.isEmpty(rs)){
             return new ResponseData(HttpStatus.NOT_FOUND, "failed", null);
         }else{
-            return new ResponseData(HttpStatus.OK, "success", movieRepository.getMoviesFuture());
+            return new ResponseData(HttpStatus.OK, "success", rs);
         }
     }
 }

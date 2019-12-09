@@ -1,13 +1,12 @@
 package com.thanhhanh.beta.controller;
 
-import com.thanhhanh.beta.entity.Book;
+import com.thanhhanh.beta.request.BookRequest;
 import com.thanhhanh.beta.service.BookService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -21,12 +20,12 @@ public class BookController {
 
     @ApiOperation(value = "Book vé xem phim")
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ResponseEntity<?> bookTick(@RequestBody Book book){
-        return ResponseEntity.ok(bookService.bookTicket(book));
+    public ResponseEntity<?> bookTick(Authentication authentication,  @RequestBody BookRequest bookRequest){
+        return ResponseEntity.ok(bookService.bookTicket(authentication, bookRequest));
     }
     @ApiOperation(value = "Thay đổi trang thái ghế theo vé")
     @PostMapping(value = "/confirm")
-    public ResponseEntity<?> confirmTick(@RequestBody HashMap<String, Integer> request){
-        return ResponseEntity.ok(bookService.updateStatus(request.get("userId"), request.get("scheduleId")));
+    public ResponseEntity<?> confirmTick(Authentication authentication, @RequestBody HashMap<String, Integer> request){
+        return ResponseEntity.ok(bookService.updateStatus(authentication, request.get("bookId")));
     }
 }

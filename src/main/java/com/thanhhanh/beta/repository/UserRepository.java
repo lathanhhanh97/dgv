@@ -21,8 +21,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "INSERT INTO `users`( `username`, `password`, `user_avatar`, `user_fullname`, `user_birthday`, `user_gender`, `user_email`, `user_city`, `user_phone`, `user_point`) VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,0)", nativeQuery = true)
     Integer registerUser(String username, String password, String user_avatar,String user_fullname,  String user_birthday, Integer user_gender, String user_email, String user_city, String user_phone);
     //update
+    @Transactional
+    @Modifying
     @Query(value = "UPDATE `users` SET ,`username`= ?1, `user_fullname`=?2,`user_birthday`=?3,`user_gender`=?4,`user_email`=?5,`user_city`=?6,`user_phone`=?7 WHERE `user_id`= ?8", nativeQuery = true)
-    String updateUser(String username, String user_fullname, String user_birtday, Integer user_gender, String user_email, String user_city, String user_phone, Integer user_id);
+    Integer updateUser(String username, String user_fullname, String user_birtday, Integer user_gender, String user_email, String user_city, String user_phone, Integer user_id);
 
     User findByUsername(String username);
 
@@ -31,4 +33,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM `users` WHERE `user_phone` = ?1")
     User findByPhone(String email);
+
+    @Query(nativeQuery = true, value = "SELECT `user_id` FROM `users` WHERE `username` = ?1")
+    Integer findIdByUsername(String username);
 }

@@ -41,8 +41,10 @@ public class UserService {
         }
     }
 
-    public ResponseData<String> updateUser(Integer user_id, UserNameProfile user) throws ParseException {
-        UserNameProfile u = userRepository.getUserById(user_id);
+    public ResponseData<String> updateUser(Authentication authentication, UserNameProfile user) throws ParseException {
+        Integer userId = userRepository.findIdByUsername(authentication.getName());
+
+        UserNameProfile u = userRepository.getUserById(userId);
         u.setUsername(user.getUsername());
         u.setUserFullname(user.getUserFullname());
 
@@ -55,9 +57,10 @@ public class UserService {
         u.setUserCity(user.getUserCity());
         u.setUserPhone(user.getUserPhone());
 
-        userRepository.updateUser(user.getUsername(), user.getUserFullname(),dt.format(date), user.getUserGender(), user.getUserEmail(), user.getUserCity(),user.getUserPhone(), user_id);
 
-        return new ResponseData(HttpStatus.OK, "success", userRepository.updateUser(user.getUsername(), user.getUserFullname(),dt.format(date), user.getUserGender(), user.getUserEmail(), user.getUserCity(),user.getUserPhone(), user_id));
+        userRepository.updateUser(user.getUsername(), user.getUserFullname(), dt.format(date), user.getUserGender(), user.getUserEmail(), user.getUserCity(),user.getUserPhone(), userId);
+
+        return new ResponseData(HttpStatus.OK, "success", userRepository.updateUser(user.getUsername(), user.getUserFullname(),dt.format(date), user.getUserGender(), user.getUserEmail(), user.getUserCity(),user.getUserPhone(), userId));
     }
 
     public ResponseData<Integer> registerUser(User user){
@@ -91,5 +94,9 @@ public class UserService {
 
         String jwt = token.generateToken((UserDetails) authentication.getPrincipal());
         return new ResponseData(HttpStatus.OK, "success", jwt);
+    }
+
+    public ResponseData<User> getInfo(Authentication authentication){
+        return new ResponseData(HttpStatus.OK, "success", userRepository.findByUsername(authentication.getName()));
     }
 }

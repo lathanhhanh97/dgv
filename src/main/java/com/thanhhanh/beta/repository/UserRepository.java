@@ -36,4 +36,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(nativeQuery = true, value = "SELECT `user_id` FROM `users` WHERE `username` = ?1")
     Integer findIdByUsername(String username);
+
+    @Query(value = "SELECT `user_point` FROM `users` WHERE `user_id` = ?1", nativeQuery = true)
+    Double getPoint(Integer user_id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE `users` SET `user_point`=?1  WHERE `user_id`= ?2", nativeQuery = true)
+    Integer addPoint(Double point, Integer user_id);
 }

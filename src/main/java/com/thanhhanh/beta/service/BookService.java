@@ -30,6 +30,8 @@ public class BookService {
 
     public ResponseData<Integer> updateStatus(Authentication authentication, Integer book_id){
             Integer userId = userRepository.findIdByUsername(authentication.getName());
+            Double point = userRepository.getPoint(userId);
+            userRepository.addPoint(point+10, userId);
             return new ResponseData(HttpStatus.OK, "book running", bookRepository.updateStatus(userId, book_id));
     }
 
